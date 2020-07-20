@@ -32,7 +32,9 @@ for _ in range(5):
 
 print('\nTest accuracy:', test_acc)
 
-predictions = model.predict(test_images)
+new_model = tf.keras.models.load_model('my_model.h5')
+
+predictions = new_model.predict(test_images)
 
 plt.figure(figsize=(5,5))
 for i in range(5):
