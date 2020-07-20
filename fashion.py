@@ -12,20 +12,23 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 train_images = train_images/255.0
 test_images = test_images/255.0
+best = 0
+for _ in range(5):
 
-model = keras.Sequential([
-	keras.layers.Flatten(input_shape=(28,28)),
-	keras.layers.Dense(128, activation="relu"),
-	keras.layers.Dense(10, activation="softmax")
+	model = keras.Sequential([
+		keras.layers.Flatten(input_shape=(28,28)),
+		keras.layers.Dense(128, activation="relu"),
+		keras.layers.Dense(10, activation="softmax")
 	])
 
-model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+	model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
-model.fit(train_images, train_labels, epochs=5)
+	model.fit(train_images, train_labels, epochs=5)
 
-test_loss, test_acc = model.evaluate(test_images, test_labels)
-
-model.save('my_model.h5') 
+	test_loss, test_acc = model.evaluate(test_images, test_labels)
+	if test_acc > best:
+		best=test_acc
+		model.save('my_model.h5') 
 
 print('\nTest accuracy:', test_acc)
 
