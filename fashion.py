@@ -25,4 +25,16 @@ model.fit(train_images, train_labels, epochs=5)
 
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 
+model.save('my_model.h5') 
+
 print('\nTest accuracy:', test_acc)
+
+predictions = model.predict(test_images)
+
+plt.figure(figsize=(5,5))
+for i in range(5):
+    plt.grid(False)
+    plt.imshow(test_images[i], cmap=plt.cm.binary)
+    plt.xlabel(class_names[test_labels[i]])
+    plt.title(class_names[np.argmax(predictions[i])])
+    plt.show()
